@@ -1,8 +1,14 @@
 build: src/main.zig build.zig
-	zig build
+	zig build 
 
-test: src/main.zig
-	zig test src/main.zig
+test: src/main.zig build.zig
+	zig build test
 
-run: zig-out/bin/hello-zig
-	./zig-out/bin/hello-zig
+run: src/main.zig build.zig
+	zig build run
+
+docker-build:
+	docker build -t hello-zig:latest .
+
+docker-run:
+	docker run --interactive --tty --rm --mount type=bind,source=./,target=/app hello-zig:latest
